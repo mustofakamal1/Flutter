@@ -1,4 +1,4 @@
-class User {
+class Order {
   int id;
   String number;
   String pid;
@@ -6,7 +6,7 @@ class User {
   String nominal;
   String order_date;
 
-  User(this.id, this.number, this.pid, this.jid,
+  Order(this.id, this.number, this.pid, this.jid,
       this.nominal, this.order_date);
 
   Map<String, dynamic> toMap() {
@@ -21,7 +21,7 @@ class User {
     return map;
   }
 
-  User.fromMap(Map<String, dynamic> map) {
+  Order.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     number = map['number'];
     pid = map['pid'];
