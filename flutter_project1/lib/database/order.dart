@@ -4,10 +4,10 @@ class Order {
   String pid;
   String jid;
   String nominal;
-  String order_date;
+  String orderDate;
 
   Order(this.id, this.number, this.pid, this.jid,
-      this.nominal, this.order_date);
+      this.nominal, this.orderDate);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -16,7 +16,7 @@ class Order {
       'pid': pid,
       'jid': jid,
       'nominal': nominal,
-      'order_date': order_date,
+      'orderDate': orderDate,
     };
     return map;
   }
@@ -27,6 +27,6 @@ class Order {
     pid = map['pid'];
     jid = map['jid'];
     nominal = map['nominal'];
-    order_date = map['order_date'];
+    orderDate = map['orderDate'];
   }
 }

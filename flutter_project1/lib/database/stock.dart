@@ -4,10 +4,10 @@ class Stock {
   String quantity;
   String price;
   String password;
-  String last_update;
+  String lastUpdate;
 
   Stock(this.id, this.nominal, this.quantity, this.price,
-      this.last_update);
+      this.lastUpdate);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -15,7 +15,7 @@ class Stock {
       'nominal': nominal,
       'quantity': quantity,
       'price': price,
-      'last_update': last_update,
+      'lastUpdate': lastUpdate,
     };
     return map;
   }
@@ -25,6 +25,6 @@ class Stock {
     nominal = map['nominal'];
     quantity = map['quantity'];
     price = map['price'];
-    last_update = map['last_update'];
+    lastUpdate = map['lastUpdate'];
   }
 }

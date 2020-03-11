@@ -1,9 +1,9 @@
-class User_role {
+class UserRole {
   int id;
   String uid;
   String rid;
 
-  User_role(this.id, this.uid, this.rid);
+  UserRole(this.id, this.uid, this.rid);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -14,7 +14,7 @@ class User_role {
     return map;
   }
 
-  User_role.fromMap(Map<String, dynamic> map) {
+  UserRole.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     uid = map['uid'];
     rid = map['rid'];

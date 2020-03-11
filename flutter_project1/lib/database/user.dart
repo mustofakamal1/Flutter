@@ -4,10 +4,10 @@ class User {
   String email;
   String image;
   String password;
-  String last_active;
+  String lastActive;
 
   User(this.id, this.name, this.email, this.image,
-      this.password, this.last_active);
+      this.password, this.lastActive);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -16,7 +16,7 @@ class User {
       'email': email,
       'image': image,
       'password': password,
-      'last_active': last_active,
+      'lastActive': lastActive,
     };
     return map;
   }
@@ -27,6 +27,6 @@ class User {
     email = map['email'];
     image = map['image'];
     password = map['password'];
-    last_active = map['last_active'];
+    lastActive = map['lastActive'];
   }
 }

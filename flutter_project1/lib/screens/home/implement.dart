@@ -23,7 +23,7 @@ class _DBTestPageState extends State<DBTestPage> {
   String email;
   String image;
   String password;
-  String last_active;
+  String lastActive;
 
   final formKey = new GlobalKey<FormState>();
   var dbHelper;
@@ -51,13 +51,13 @@ class _DBTestPageState extends State<DBTestPage> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        User e = User(curUserId, name, email, image, password, last_active);
+        User e = User(curUserId, name, email, image, password, lastActive);
         dbHelper.update(e);
         setState(() {
           isUpdating = false;
         });
       } else {
-        User e = User(null, name, email, image, password, last_active);
+        User e = User(null, name, email, image, password, lastActive);
         dbHelper.save(e);
       }
       clearName();
@@ -190,13 +190,13 @@ class _DBTestPageState extends State<DBTestPage> {
                     },
                   ),
                   DataCell(
-                    Text(user.last_active ?? '-'),
+                    Text(user.lastActive ?? '-'),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
                         curUserId = user.id;
                       });
-                      controller.text = user.last_active;
+                      controller.text = user.lastActive;
                     },
                   ),
                 ]),
