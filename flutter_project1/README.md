@@ -2,6 +2,8 @@
 
 A new Flutter application.
 
+Link App Release : https://drive.google.com/file/d/1O4wFH3BCMdMnBiYy-xAAvVB_kLxR8HQm/view?usp=sharing
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
