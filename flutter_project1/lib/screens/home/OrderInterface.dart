@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
-import '../../database/user.dart';
+import '../../database/order.dart';
+import '../../models/OrderSql.dart';
 import 'dart:async';
-import 'package:flutterproject1/models/DBHelper.dart';
 
-class DBTestPage extends StatefulWidget {
+
+class OrderInterface extends StatefulWidget {
   final String title;
 
-  DBTestPage({Key key, this.title}) : super(key: key);
+  OrderInterface({Key key, this.title}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _DBTestPageState();
+    return _OrderInterfaceState();
   }
 }
 
-class _DBTestPageState extends State<DBTestPage> {
+class _OrderInterfaceState extends State<OrderInterface> {
   //
-  Future<List<User>> users;
-  TextEditingController controller = TextEditingController();
-  int curUserId;
-  String name;
-  String email;
-  String image;
-  String password;
-  String lastActive;
+  Future<List<Order>> orders;
+  TextEditingController numberController = TextEditingController();
+  TextEditingController pidController = TextEditingController();
+  TextEditingController jidController = TextEditingController();
+  TextEditingController nominalController = TextEditingController();
+  TextEditingController order_dateController = TextEditingController();
+  int curOrderId;
+  String number;
+  int pid;
+  int jid;
+  int nominal;
+  String order_date;
 
   final formKey = new GlobalKey<FormState>();
   var dbHelper;
@@ -32,32 +37,32 @@ class _DBTestPageState extends State<DBTestPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = DBHelper();
+    dbHelper = OrderSql();
     isUpdating = false;
     refreshList();
   }
 
   refreshList() {
     setState(() {
-      users = dbHelper.getUsers();
+      orders = dbHelper.getOrders();
     });
   }
 
   clearName() {
-    controller.text;
+    numberController.text;
   }
 
   validate() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       if (isUpdating) {
-        User e = User(curUserId, name, email, image, password, lastActive);
+        Order e = Order(curOrderId, number, pid, jid, nominal, order_date);
         dbHelper.update(e);
         setState(() {
           isUpdating = false;
         });
       } else {
-        User e = User(null, name, email, image, password, lastActive);
+        Order e = Order(null, number, pid, jid, nominal, order_date);
         dbHelper.save(e);
       }
       clearName();
@@ -76,18 +81,39 @@ class _DBTestPageState extends State<DBTestPage> {
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
             TextFormField(
-              controller: controller,
+              controller: numberController,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(labelText: 'Name'),
               validator: (val) => val.length == 0 ? 'Enter Name' : null,
-              onSaved: (val) => name = val,
+              onSaved: (val) => number = val,
             ),
             TextFormField(
-              controller: controller,
+              controller: pidController,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(labelText: 'Email'),
               validator: (val) => val.length == 0 ? 'Enter Email' : null,
-              onSaved: (val) => email = val,
+              onSaved: (val) => pid = int.parse(val),
+            ),
+            TextFormField(
+              controller: jidController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(labelText: 'Email'),
+              validator: (val) => val.length == 0 ? 'Enter Email' : null,
+              onSaved: (val) => jid = int.parse(val),
+            ),
+            TextFormField(
+              controller: nominalController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(labelText: 'Email'),
+              validator: (val) => val.length == 0 ? 'Enter Email' : null,
+              onSaved: (val) => nominal = int.parse(val),
+            ),
+            TextFormField(
+              controller: order_dateController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(labelText: 'Email'),
+              validator: (val) => val.length == 0 ? 'Enter Email' : null,
+              onSaved: (val) => order_date = val,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,7 +139,7 @@ class _DBTestPageState extends State<DBTestPage> {
     );
   }
 
-  SingleChildScrollView dataTable(List<User> users) {
+  SingleChildScrollView dataTable(List<Order> orders) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: SingleChildScrollView(
@@ -121,82 +147,82 @@ class _DBTestPageState extends State<DBTestPage> {
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text('NAME'),
+              label: Text('NUMBER'),
             ),
             DataColumn(
               label: Text('DELETE'),
             ),
             DataColumn(
-              label: Text('EMAIL'),
+              label: Text('PID'),
             ),
             DataColumn(
-              label: Text('IMAGE'),
+              label: Text('JID'),
             ),
             DataColumn(
-              label: Text('PASSWORD'),
+              label: Text('NOMINAL'),
             ),
             DataColumn(
-              label: Text('LAST_ACTIVE'),
+              label: Text('ORDER DATE'),
             )
           ],
-          rows: users
+          rows: orders
               .map(
-                (user) => DataRow(cells: [
+                (order) => DataRow(cells: [
                   DataCell(
-                    Text(user.name),
+                    Text(order.number),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = user.id;
+                        curOrderId = order.id;
                       });
-                      controller.text = user.name;
+                      numberController.text = order.number;
                     },
                   ),
                   DataCell(IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      dbHelper.delete(user.id);
+                      dbHelper.delete(order.id);
                       refreshList();
                     },
                   )),
                   DataCell(
-                    Text(user.email),
+                    Text(order.pid.toString()),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = user.id;
+                        curOrderId = order.id;
                       });
-                      controller.text = user.email;
+                      pidController.text = order.pid.toString();
                     },
                   ),
                   DataCell(
-                    Text(user.image ?? '-'),
+                    Text(order.jid ?? '-'),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = user.id;
+                        curOrderId = order.id;
                       });
-                      controller.text = user.image;
+                      jidController.text = order.jid.toString();
                     },
                   ),
                   DataCell(
-                    Text(user.password ?? '-'),
+                    Text(order.nominal ?? '-'),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = user.id;
+                        curOrderId = order.id;
                       });
-                      controller.text = user.password;
+                      nominalController.text = order.nominal.toString();
                     },
                   ),
                   DataCell(
-                    Text(user.lastActive ?? '-'),
+                    Text(order.order_date ?? '-'),
                     onTap: () {
                       setState(() {
                         isUpdating = true;
-                        curUserId = user.id;
+                        curOrderId = order.id;
                       });
-                      controller.text = user.lastActive;
+                      order_dateController.text = order.order_date;
                     },
                   ),
                 ]),
@@ -210,7 +236,7 @@ class _DBTestPageState extends State<DBTestPage> {
   list() {
     return Expanded(
       child: FutureBuilder(
-        future: users,
+        future: orders,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return dataTable(snapshot.data);
@@ -219,11 +245,11 @@ class _DBTestPageState extends State<DBTestPage> {
             return Text('No Data');
           }
 
-          if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text("No Data Found");
-          }
-
-          return CircularProgressIndicator();
+//          if (null == snapshot.data || snapshot.data.length == 0) {
+//            return Text("No Data Found");
+//          }
+//
+//          return CircularProgressIndicator();
         },
       ),
     );
@@ -241,8 +267,8 @@ class _DBTestPageState extends State<DBTestPage> {
           mainAxisSize: MainAxisSize.min,
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
-            form(),
             list(),
+            form(),
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterproject1/screens/home/Welcome.dart';
 import 'package:flutterproject1/screens/wrapper.dart';
+import 'service/Drawer.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'E - Counter',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Wrapper(),
+      home: Welcome(),
     );
   }
 }
